@@ -1,4 +1,4 @@
-# Growtopia Captcha Solver (Beta)
+# Growtopia Captcha Solver
 
 # Parse Captcha UID
 
