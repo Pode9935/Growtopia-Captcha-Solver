@@ -8,12 +8,12 @@ Varlist
 param 0: onShowCaptcha
 param 1: add_puzzle_captcha|0098/captcha/generated/2515b3da-7868-408a-818c-c2ba12ca2287-PuzzleWithMissingPiece.rttex|0098/captcha/generated/2515b3da-7868-408a-818c-c2ba12ca2287-TrimmedPuzzlePiece.rttex|ubistatic-a.akamaihd.net|200118|
 end_dialog|puzzle_captcha_submit||Submit|
-2515b3da-7868-408a-818c-c2ba12ca2287-PuzzleWithMissingPiece.rttex -> Puzzle UID = 2515b3da-7868-408a-818c-c2ba12ca2287
-Puzzle UID = 2515b3da-7868-408a-818c-c2ba12ca2287
+2515b3da-7868-408a-818c-c2ba12ca2287-PuzzleWithMissingPiece.rttex -> Captcha UID = 2515b3da-7868-408a-818c-c2ba12ca2287
+Captcha UID = 2515b3da-7868-408a-818c-c2ba12ca2287
 ```
 
 # API
-```http://52.140.200.84:5000/captcha=[PuzzleUID]```
+```http://52.140.200.84:5000/captcha=[CaptchaUID]```
 
 # Example
 Request Method = GET
