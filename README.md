@@ -13,7 +13,7 @@ Puzzle UID = 2515b3da-7868-408a-818c-c2ba12ca2287
 ```
 
 # API
-http://52.140.200.84:5000/captcha=[PuzzleUID]
+```http://52.140.200.84:5000/captcha=[PuzzleUID]```
 
 # Example
 Request Method = GET
