@@ -29,6 +29,5 @@ Solved :
 ```
 Failed :
 ```txt
-- Failed
-- Invalid Captcha UID
+Failed
 ```
