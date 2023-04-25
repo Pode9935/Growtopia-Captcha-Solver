@@ -27,4 +27,4 @@
 
 ## Credits
 - https://github.com/GuckTubeYT/RTTEXConverter
-- https://youtu.be/ZzC3SJJifMg
+- https://github.com/deepakat002/yolov8
