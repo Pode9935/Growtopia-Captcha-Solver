@@ -34,7 +34,7 @@ def yolov8(name):
             for bbox in boxes:
                 for i, box in enumerate(bbox.xyxy):
                     x, y, w, h = [int(i) for i in box]
-                    return str(x /512)
+                    return str(x / 512)
 
         else:
             shutil.copyfile('data/{}.png'.format(name), 'failed/{}.png'.format(name))
@@ -45,7 +45,6 @@ def captcha(pid):
     url = 'https://ubistatic-a.akamaihd.net/0098/captcha/generated/{}-PuzzleWithMissingPiece.rttex'.format(pid)
     http = urllib3.PoolManager()
     r = http.request('GET', url)
-    print(r.status)
     if r.status == 200:
         with open('data/{}.rttex'.format(pid), 'wb') as f:
             f.write(r.data)
