@@ -15,7 +15,6 @@ def RTTEX_PNG(name):
 
     width = int.from_bytes(data[12:16], byteorder='little')
     height = int.from_bytes(data[8:12], byteorder='little')
-    channels = 3 + data[0x1c]
 
     img = Image.frombytes(mode='RGBA', size=(width, height), data=data[0x7c:])
     img = img.transpose(method=Image.FLIP_TOP_BOTTOM)
