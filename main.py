@@ -10,7 +10,7 @@ app = Flask(__name__)
 model = YOLO('best.pt')
 
 def RTTEX_PNG(name):
-    with open('data/{}.rttex'.format(name), 'rb') as image:
+    with open(r'data/{}.rttex'.format(name), 'rb') as image:
         data = image.read()
 
     width = int.from_bytes(data[12:16], byteorder='little')
@@ -23,11 +23,11 @@ def RTTEX_PNG(name):
     img.save(buffer, format='PNG')
     png_data = buffer.getvalue()
 
-    with open('data/{}.png'.format(name), 'wb') as simg:
+    with open(r'data/{}.png'.format(name), 'wb') as simg:
         simg.write(png_data)
 
 def yolov8(name):
-    reresults = model('data/{}.png'.format(name), conf=0.5)
+    reresults = model.predict(r'data/{}.png'.format(name), conf=0.5)
     for result in reresults:
         boxes = result.boxes
         if not 'tensor([],' in str(boxes.xyxy):
@@ -37,7 +37,7 @@ def yolov8(name):
                     return str(x / 512)
 
         else:
-            shutil.copyfile('data/{}.png'.format(name), 'failed/{}.png'.format(name))
+            shutil.copyfile(r'data/{}.png'.format(name), r'failed/{}.png'.format(name))
             return 'Failed'
 
 @app.route('/captcha=<string:pid>')
@@ -46,7 +46,7 @@ def captcha(pid):
     http = urllib3.PoolManager()
     r = http.request('GET', url)
     if r.status == 200:
-        with open('data/{}.rttex'.format(pid), 'wb') as f:
+        with open(r'data/{}.rttex'.format(pid), 'wb') as f:
             f.write(r.data)
 
         RTTEX_PNG(pid)
