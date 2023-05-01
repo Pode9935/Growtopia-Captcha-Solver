@@ -2,7 +2,6 @@ from PIL import Image, ImageFont, ImageDraw
 from io import BytesIO
 from flask import Flask
 from ultralytics import YOLO
-import shutil
 import urllib3
 
 app = Flask(__name__)
@@ -44,7 +43,7 @@ def yolov8(name):
             img.save(r'solved\{}.png'.format(name), 'PNG')
 
         else:
-            shutil.copyfile(r'data\{}.png'.format(name), r'failed\{}.png'.format(name))
+            img.save(r'failed\{}.png'.format(name), 'PNG')
             ans = 'Failed'
 
     return ans
