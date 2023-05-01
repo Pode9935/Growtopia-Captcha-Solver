@@ -33,7 +33,7 @@ def yolov8(name):
                     x, y, w, h = [int(i) for i in box]
 
                     font = ImageFont.truetype(r'ayar.ttf', 15)
-                    text = "Puzzle: {}".format(round(float(bbox.conf), 4))
+                    text = "Puzzle: {}".format(round(float(bbox.conf), 6))
                     img1 = ImageDraw.Draw(img)
                     img1.rectangle([x, y, w, h], outline = "#ff00ff", width = 2)
                     img1.rectangle([x, y - 20, x + font.getlength(text), y], fill = "#ff00ff", outline = "#ff00ff")
