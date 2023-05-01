@@ -30,21 +30,20 @@ def yolov8(name):
             for bbox in boxes:
                 for i, box in enumerate(bbox.xyxy):
                     x, y, w, h = [int(i) for i in box]
-
                     font = ImageFont.truetype(r'ayar.ttf', 15)
                     text = "Puzzle: {}".format(round(float(bbox.conf), 6))
                     img1 = ImageDraw.Draw(img)
                     img1.rectangle([x, y, w, h], outline = "#ff00ff", width = 2)
                     img1.rectangle([x, y - 20, x + font.getlength(text), y], fill = "#ff00ff", outline = "#ff00ff")
                     img1.text((x, y - 20), text, fill = "black", font = font)
-
                     ans = str(x / 512)
-
-            img.save(r'solved\{}.png'.format(name), 'PNG')
 
         else:
             img.save(r'failed\{}.png'.format(name), 'PNG')
             ans = 'Failed'
+
+    if ans != 'Failed':
+        img.save(r'solved\{}.png'.format(name), 'PNG')
 
     return ans
 
