@@ -1,3 +1,5 @@
+import cv2
+import numpy as np
 from PIL import Image, ImageFont, ImageDraw
 from io import BytesIO
 from flask import Flask
@@ -42,30 +44,33 @@ def captcha(pid):
     if os.path.exists(img_path):
         ans = ''
         img = Image.open(r'data\{}.png'.format(pid))
-        reresults = model.predict(img, conf=0.6)
-        for result in reresults:
-            boxes = result.boxes
-            if not 'tensor([],' in str(boxes.xyxy):
-                for bbox in boxes:
-                    for i, box in enumerate(bbox.xyxy):
-                        x, y, w, h = [int(i) for i in box]
-                        font = ImageFont.truetype(r'ayar.ttf', 15)
-                        text = "Puzzle: {}".format(round(float(bbox.conf), 6))
-                        img1 = ImageDraw.Draw(img)
-                        img1.rectangle([x, y, w, h], outline = "#ff00ff", width = 2)
-                        img1.rectangle([x, y - 20, x + font.getlength(text), y], fill = "#ff00ff", outline = "#ff00ff")
-                        img1.text((x, y - 20), text, fill = "black", font = font)
-                        ans = str(x / 512)
+        results = model.predict(img, conf=0.6)
+        max_conf_result = {'conf': 0.0}
+        for result in results:
+            for bbox in result.boxes:
+                for i, box in enumerate(bbox.xyxy):
+                    x, y, w, h = [int(i) for i in box]
+                    if bbox.conf > max_conf_result['conf']:
+                        max_conf_result['conf'] = bbox.conf
+                        max_conf_result['coor'] = (x, y, w, h)
 
-            else:
-                if not os.path.exists(failed_path):
-                    img.save(r'failed\{}.png'.format(pid), 'PNG')
+        if max_conf_result['conf'] > 0.0:
+            x, y, w, h = max_conf_result['coor']
+            font = ImageFont.truetype(r'ayar.ttf', 15)
+            text = "Puzzle: {}".format(round(float(max_conf_result['conf']), 6))
+            img1 = ImageDraw.Draw(img)
+            img1.rectangle([x, y, w, h], outline="#ff00ff", width=2)
+            img1.rectangle([x, y - 20, x + font.getlength(text), y], fill="#ff00ff", outline="#ff00ff")
+            img1.text((x, y - 20), text, fill="black", font=font)
+            img.save(r'solved\{}.png'.format(pid), 'PNG')
 
-                ans = 'Failed'
+            ans = str(x / 512)
 
-        if ans != 'Failed':
-            if not os.path.exists(solved_path):
-                img.save(r'solved\{}.png'.format(pid), 'PNG')
+        else:
+            if not os.path.exists(failed_path):
+                img.save(r'failed\{}.png'.format(pid), 'PNG')
+
+            ans = 'Failed'
 
         return ans
 
